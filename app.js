@@ -1,3 +1,15 @@
+// 🗓 Show today's date in the badge immediately on page load
+function setTodayBadge() {
+  const el = document.getElementById("dateBadge");
+  if (!el) return;
+  const now = new Date();
+  const dd = String(now.getDate()).padStart(2, "0");
+  const mm = String(now.getMonth() + 1).padStart(2, "0");
+  const yyyy = now.getFullYear();
+  el.textContent = `${dd}/${mm}/${yyyy}`;
+}
+setTodayBadge();
+
 function formatDisplayTimestamp(dateObj) {
   const pad = (num) => String(num).padStart(2, "0");
   const dd = pad(dateObj.getDate());
@@ -28,6 +40,7 @@ function setLoading(isLoading) {
       </div>`;
   }
 }
+
 
 // 🔐 Airtable Config
 const API_KEY = "key";
@@ -98,15 +111,11 @@ function renderTables(llpRecords, bmRecords) {
   const llpDate = getTableDate(llpRecords);
   const bmDate = getTableDate(bmRecords);
 
-  // Populate the top date badge (above h1)
-  const dateBadgeEl = document.getElementById("dateBadge");
-  if (dateBadgeEl && llpDate) dateBadgeEl.textContent = llpDate;
-
   // Render LLP Table
   html += `
     <h3 class="table-title">LLP Report</h3>
     <div class="results-card" style="margin-bottom: 40px;">
-      <table class="results-table">
+      <table class="results-table llp-table">
         <thead>
           <tr>
             <th>Devotee</th>
